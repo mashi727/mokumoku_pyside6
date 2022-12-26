@@ -1,0 +1,12 @@
+version: '3'
+services:
+  pyside6:
+    restart: always
+    build: .
+    container_name: 'pyside6'
+    working_dir: '/home/worker/'
+    tty: true
+    volumes:
+      - $HOME/works/py_works:/home/worker/py_works
+      - ./apps:/home/worker/apps
+      

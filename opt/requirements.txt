@@ -1,0 +1,14 @@
+pyqtgraph
+PySide6
+PySide6-Addons
+PySide6-Essentials
+Pillow
+numba
+pandas
+folium
+pandas_datareader
+backtesting
+TA-Lib
+matplotlib
+opencv-python
+opencv-contrib-python-headless
