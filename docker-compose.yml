@@ -7,6 +7,6 @@ services:
     working_dir: '/home/worker/'
     tty: true
     volumes:
-      - $HOME/works/py_works:/home/worker/py_works
+    #  - $HOME/works/py_works:/home/worker/py_works
       - ./apps:/home/worker/apps
       

@@ -80,7 +80,7 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ JST-9
 ENV TERM xterm
 # XQuartsを再起動した場合は、xtermにて xhost + とする必要あり。
-ENV DISPLAY 192.168.64.1:0
+ENV DISPLAY :0
 # prepend the new path パスを追加
 ENV PATH /home/$USERNAME/.local/bin:$PATH
 RUN echo 'alias python="python3"' >> ~/.bashrc
