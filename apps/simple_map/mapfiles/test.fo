@@ -1,0 +1,43 @@
+import altair as alt
+import numpy as np
+import pandas as pd
+
+# 100行の適当なデータ
+df = pd.DataFrame({
+  '日付': pd.date_range(start="2021/1/1",freq="d", periods=100),
+  '値': np.random.randint(1,101,100)
+})
+
+# 折れ線グラフをaltairで作成
+chart = alt.Chart(df).mark_line().encode(
+    x='日付',
+    y='値'
+)
+
+import json
+import folium
+from folium import plugins
+
+# ベースの地図を作成
+center = [33,133] # 中心座標
+m = folium.Map(center, zoom_start=8)
+
+# ポップアップを生成
+popup = folium.Popup(max_width="100%")
+
+# グラフのデータをjsonに加工
+data = json.loads(chart.to_json())
+# グラフをポップアップに追加
+folium.features.VegaLite(data, width=300, height=250).add_to(popup)
+
+
+# 地図をフルスクリーンにするボタンを地図に追加
+plugins.Fullscreen(
+    position="topright",
+    title="拡大する",      
+    title_cancel="元に戻す",
+    force_separate_button=True,
+).add_to(m)
+
+# 地図にマーカー(とポップアップ)を追加
+folium.Marker(center, popup=popup).add_to(m)

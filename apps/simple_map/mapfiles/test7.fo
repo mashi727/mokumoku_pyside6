@@ -1,0 +1,13 @@
+import folium
+
+#ベースの地図作成 (中心座標は適当です)
+m = folium.Map(location=[36, 138], zoom_start=12)
+
+# 中心座標に目印(赤)を追加 (特に必要なし)
+folium.Marker([36, 138], 
+              popup="地図の中心座標",
+              icon=folium.Icon(color="red")
+             ).add_to(m)
+
+# クリックでピンを差し散らかすメソッドを追加
+folium.ClickForMarker(popup="追加したピン").add_to(m)

@@ -1,0 +1,69 @@
+import openrouteservice as ors
+import folium
+
+apikey_path = './.openrouteservice_apikey'
+with open(apikey_path) as f:
+    API_KEY = f.readlines()[0].rstrip()
+
+key = API_KEY
+client = ors.Client(key=key)
+
+m = folium.Map(location=[52.521861, 13.40744], tiles='cartodbpositron', zoom_start=13)
+
+# Some coordinates in Berlin
+coordinates = [[13.384116, 52.533558],  [13.374825, 52.496369]]
+job_locations = [[13.41774, 52.498929], [13.428726, 52.519355]]
+
+
+
+# The popup will show the ID in the coordinate list. In a non-optimized waypoint order, the waypoints
+# would have been visited from ID 0 to ID 3 sequentially.
+for idx, coords in enumerate(coordinates):
+    folium.Marker(location=list(reversed(coords)),
+                 popup=folium.Popup("ID: {}".format(idx))).add_to(m)
+
+
+# Assign vehicles to do the jobs
+vehicles = []
+for idx, coords in enumerate(coordinates):
+    vehicles.append(ors.optimization.Vehicle(
+        id=idx,
+        profile='cycling-road',
+        start=coords,
+        end=coords,
+        capacity=[3]  # Limit capacity so only 3 jobs can be taken by each vehicle
+    ))
+    folium.Marker(location=list(reversed(coords)), icon=folium.Icon(icon='bicycle', prefix='fa')).add_to(m)
+
+# Define jobs to be carried out
+jobs=[]
+for idx, coords in enumerate(job_locations):
+    jobs.append(ors.optimization.Job(
+        id=idx,
+        location=coords,
+        amount=[1]  # Occupies capacity in vehicle
+    ))
+    folium.Marker(location=list(reversed(coords)), icon=folium.Icon(icon=None , prefix='fa', color='green')).add_to(m)
+
+optimized = client.optimization(
+    jobs=jobs,
+    vehicles=vehicles,
+    geometry=True,  ## will output the geometry,
+)
+
+'''
+
+route = client.directions(
+    coordinates=coordinates,
+    profile='foot-walking',
+    format='geojson',
+    validate=False,
+    optimize_waypoints=True
+)
+
+folium.PolyLine(
+    locations=[list(reversed(coords)) for coords in ors.convert.decode_polyline(optimized['routes'][0]['geometry'])['coordinates']],
+    color='red'
+).add_to(m)
+
+'''

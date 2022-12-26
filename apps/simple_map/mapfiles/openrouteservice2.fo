@@ -1,0 +1,43 @@
+import openrouteservice
+from branca.element import Figure
+from openrouteservice import convert
+
+
+apikey_path = './.openrouteservice_apikey'
+with open(apikey_path) as f:
+    API_KEY = f.readlines()[0].rstrip()
+
+key = API_KEY
+client = openrouteservice.Client(key=key)
+
+p1 =35.65734,138.6354
+p2 = 35.69826,139.41378
+p1r = tuple(reversed(p1))
+p2r = tuple(reversed(p2))
+
+
+print(p1r)
+print(type(p1r))
+
+mean_lat = (p1[0] + p2[0]) / 2
+mean_long = (p1[1] + p2[1]) / 2
+
+# 経路計算 (Directions V2)
+routedict = client.directions((p1r, p2r), profile='cycling-road',optimize_waypoints=True)
+geom = routedict["routes"][0]["geometry"]
+decoded = convert.decode_polyline(geom)
+
+
+# 上の計算の続きで
+
+def reverse_lat_long(list_of_lat_long):
+    """緯度経度をひっくり返す"""
+    return [(p[1], p[0]) for p in list_of_lat_long]
+
+coord = reverse_lat_long(decoded["coordinates"])
+
+# foliumでサイズ(600, 400)の地図を描画
+fig = Figure(width=600, height=400)
+m = folium.Map(location=(mean_lat, mean_long), tiles='https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', attr='&copy; <ahref="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>', zoom_start=13)
+# 位置情報をPolyLineで地図に追加
+folium.vector_layers.PolyLine(locations=coord).add_to(m)

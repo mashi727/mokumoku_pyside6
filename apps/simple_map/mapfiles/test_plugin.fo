@@ -1,0 +1,13 @@
+import folium
+from map_center_coord import MapCenterCoord
+
+m = folium.Map(
+    location = [35.658099, 139.741357],
+    zoom_start = 12)
+
+folium.Marker(
+    [35.658099, 139.741357],
+    popup="日本経緯度原点",
+).add_to(m)
+
+MapCenterCoord().add_to(m)

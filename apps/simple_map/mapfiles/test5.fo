@@ -1,0 +1,15 @@
+import folium
+from folium import plugins
+
+
+# 中心座標 長崎市役所
+center = ['32.750331', '129.877862']
+# ベースの地図作成
+# 地図作成
+m = folium.Map(
+    location=center,
+    zoom_start=6
+)
+
+# 折り畳み式ミニマップを追加
+plugins.MiniMap(toggle_display=True).add_to(m)

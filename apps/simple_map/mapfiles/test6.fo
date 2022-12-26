@@ -1,0 +1,15 @@
+# 中心座標 日本緯度経度原点
+center = ['35.6580992222', '139.7413574722']
+# 地図作成
+m = folium.Map(
+    location=center,
+    zoom_start=17,
+    #tiles='https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', # 通常
+    #tiles='https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', # 淡色
+    tiles='https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg', # 航空写真
+    #tiles='https://cyberjapandata.gsi.go.jp/xyz/ort_old10/{z}/{x}/{y}.png', # 国土地理院 空中写真（1961～1964年）
+    #attr='国土地理院 空中写真（1961～1964年）',
+    attr='&copy; <ahref="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>'
+)
+# 折り畳み式ミニマップを追加
+plugins.MiniMap(toggle_display=True).add_to(m)

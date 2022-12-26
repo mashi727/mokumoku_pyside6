@@ -1,0 +1,17 @@
+import folium
+import base64
+from folium import IFrame
+
+logo_png = './sof.png'
+encoded = base64.b64encode(open(logo_png, 'rb').read()).decode()
+
+lat, lon = 40.70896, -74.00680
+m = folium.Map(location=[lat, lon], zoom_start=15)
+
+html = '<img src="data:image/png;base64,{}">'.format
+#iframe = IFrame(html(encoded), width=311+20, height=62+20)
+popup = folium.Popup(iframe, max_width=400)
+
+icon = folium.Icon(color="red", icon="ok")
+marker = folium.Marker(location=[lat, lon], popup=popup, icon=icon)
+marker.add_to(m)
