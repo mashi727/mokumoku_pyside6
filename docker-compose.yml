@@ -6,6 +6,8 @@ services:
     container_name: 'pyside6'
     working_dir: '/home/worker/'
     tty: true
+    environment:
+      - DISPLAY=$DISPLAY
     volumes:
     #  - $HOME/works/py_works:/home/worker/py_works
       - ./apps:/home/worker/apps
