@@ -3,7 +3,7 @@ services:
   pyside6:
     restart: always
     build: .
-    container_name: 'pyside6'
+    container_name: 'mokumoku_pyside6'
     working_dir: '/home/worker/'
     tty: true
     environment:

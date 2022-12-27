@@ -31,7 +31,7 @@ RUN wget --no-check-certificate http://prdownloads.sourceforge.net/ta-lib/ta-lib
 
 # 生活環境の構築
 # 後半のライブラリは、Pyside6関連
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y --fix-missing \
   sudo \
   zsh \
   vim \
@@ -52,7 +52,17 @@ RUN apt-get install -y \
   language-pack-ja \
   fonts-ipafont \
 # fc-cacheなどをインストール \
-  fontconfig
+  fontconfig \
+# opengl周り
+  libnss3 \
+  libxcomposite-dev \
+  libxdamage1 \
+  libxrandr2 \
+  libxtst6 \
+  libxi6 \
+  libasound2 \
+# Video driver
+  ubuntu-drivers-common
 
 
 # hostnameの設定
