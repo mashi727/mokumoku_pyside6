@@ -4,12 +4,13 @@ services:
     restart: always
     build: .
     container_name: 'mokumoku_pyside6'
+    hostname: 'mokumoku_pyside6'
     working_dir: '/home/worker/'
+    ports:
+      - "8080:8080"
     tty: true
-    environment:
-      - DISPLAY=$DISPLAY
     volumes:
-    #  - $HOME/works/py_works:/home/worker/py_works
-      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/works/mokumoku_books:/home/worker/mokumoku_books
+      #- /tmp/.X11-unix:/tmp/.X11-unix
       - ./apps:/home/worker/apps
       

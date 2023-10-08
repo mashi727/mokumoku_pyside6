@@ -48,6 +48,8 @@ RUN apt-get update && apt-get install -y --fix-missing \
   libxcb-render-util0 \
   libxcb-shape0 \
   libpython3.10-dev \
+# 2023.3.16追加
+  libxcb-randr0 \
 # 日本語周りの設定 \
   language-pack-ja \
   fonts-ipafont \
@@ -61,6 +63,8 @@ RUN apt-get update && apt-get install -y --fix-missing \
   libxtst6 \
   libxi6 \
   libasound2 \
+  iputils-ping \
+  net-tools \
 # Video driver
   ubuntu-drivers-common
 
@@ -91,6 +95,7 @@ ENV TZ JST-9
 ENV TERM xterm
 # XQuartsを再起動した場合は、xtermにて xhost + とする必要あり。
 # ENV DISPLAY :0
+ENV DISPLAY 192.168.64.1:0
 # prepend the new path パスを追加
 ENV PATH /home/$USERNAME/.local/bin:$PATH
 RUN echo 'alias python="python3"' >> ~/.bashrc
