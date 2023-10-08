@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget build-esse
 libncursesw5-dev libssl-dev libsqlite3-dev libgdbm-dev libbz2-dev liblzma-dev zlib1g-dev uuid-dev libffi-dev libdb-dev
 
 #任意バージョンのpython install
-ARG PYTHON_VER="3.10.5"
+ARG PYTHON_VER="3.11.6"
 RUN wget --no-check-certificate https://www.python.org/ftp/python/${PYTHON_VER}/Python-${PYTHON_VER}.tgz \
 && tar -xf Python-${PYTHON_VER}.tgz \
 && cd Python-${PYTHON_VER} \
@@ -24,7 +24,7 @@ RUN wget --no-check-certificate https://www.python.org/ftp/python/${PYTHON_VER}/
 RUN wget --no-check-certificate http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz \
 && tar -xzf ta-lib-0.4.0-src.tar.gz \
 && cd ta-lib \
-&& ./configure --prefix=/usr \
+&& ./configure --prefix=/usr --build=arm \
 && make \
 && make install
 
